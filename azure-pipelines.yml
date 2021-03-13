@@ -1,0 +1,177 @@
+# Maven
+# Build your Java project and run tests with Apache Maven.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/java
+
+trigger:
+#- development
+#- master
+- 2.7.0
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+#  imageName: 'pipelines-docker-shopizer'
+  DOCKER_BUILDKIT: 1
+  MAVEN_CACHE_FOLDER: $(Pipeline.Workspace)/.m2/repository
+  MAVEN_OPTS: '-Dmaven.repo.local=$(MAVEN_CACHE_FOLDER)'
+
+stages:
+- stage: Build
+  jobs:
+  - job: Build_App
+    #pool:
+    #  vmImage: 'ubuntu-latest'
+    steps:
+    #- task: Bash@3
+    #  inputs:
+    #    targetType: 'inline'
+    #    script: ls -l $(System.DefaultWorkingDirectory)
+    - task: Cache@2
+      inputs:
+        key: 'maven | "$(Agent.OS)" | **/pom.xml'
+        restoreKeys: |
+          maven | "$(Agent.OS)"
+          maven
+        path: $(MAVEN_CACHE_FOLDER)
+      displayName: Cache Maven local repo
+
+    - script: mvn install -B -e
+
+    - task: Maven@3
+      displayName: Maven build of the application
+      inputs:
+        mavenPomFile: 'pom.xml'
+        mavenOptions: '-Xmx3072m $(MAVEN_OPTS)'
+        javaHomeOption: 'JDKVersion'
+        jdkVersionOption: '1.8'
+        jdkArchitectureOption: 'x64'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        #codeCoverageToolOption: JaCoCo
+        #codeCoverageClassFilter: -:org.*
+        goals: 'clean verify'
+    #- task: Bash@3
+    #  inputs:
+    #    targetType: 'inline'
+        #script: ls $(System.DefaultWorkingDirectory)/sm-shop/target
+    #    script: ls $(System.DefaultWorkingDirectory)/sm-shop/target/site/jacoco
+
+    #- task: Bash@3
+    #  inputs:
+    #    targetType: 'inline'
+    #    script: ls $(Agent.BuildDirectory)
+    #- task: Bash@3
+    #  inputs:
+    #    targetType: 'inline'
+    #    script: ls -l
+    - task: PublishCodeCoverageResults@1
+      inputs:
+        codeCoverageTool: JaCoCo
+        #summaryFileLocation: $(System.DefaultWorkingDirectory)/jacoco/coverage.xml
+        summaryFileLocation: $(System.DefaultWorkingDirectory)/sm-shop/target/site/jacoco/jacoco.xml
+        reportDirectory: $(System.DefaultWorkingDirectory)/sm-shop/target/site/jacoco
+    - task: CopyFiles@2
+      inputs:
+        sourceFolder: $(System.DefaultWorkingDirectory)/sm-shop/target/
+        contents: 'ROOT.war'
+        TargetFolder: $(Build.ArtifactStagingDirectory) 
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact - Root.war'
+      inputs:
+        PathtoPublish: $(Build.ArtifactStagingDirectory)
+        ArtifactName: 'app-war-file-$(Build.BuildNumber)'
+  #- job: Containerize_App
+  #  dependsOn: Build_App
+  #  steps:
+  #  - task: DownloadBuildArtifacts@0
+  #    displayName: Download the artifact
+  #    inputs:
+  #      buildType: 'current'
+  #      artifactName: 'app-war-file-$(Build.BuildNumber)'
+  #      downloadPath: '$(System.ArtifactsDirectory)'	
+  #  #- task: Bash@3
+  #  #  inputs:
+  #  #    targetType: 'inline'
+  #  #    script: ls $(System.ArtifactsDirectory)/app-war-file
+  #  - task: CopyFiles@2
+  #    inputs:
+  #      SourceFolder: $(System.ArtifactsDirectory)/app-war-file-$(Build.BuildNumber)/
+  #      Contents: 'ROOT.war'
+  #      TargetFolder: $(System.DefaultWorkingDirectory)/sm-shop/
+  #  - task: Bash@3
+  #    inputs:
+  #      targetType: 'inline'
+  #      script: ls $(System.DefaultWorkingDirectory)/sm-shop/
+  #  - task: Docker@2
+  #    displayName: Login to ACR
+  #    inputs:
+  #      command: login
+  #      containerRegistry: scShopizerACR
+  #  #- task: Bash@3
+  #  #  inputs:
+  #  #    targetType: 'inline'
+  #  #    script: cd $(System.DefaultWorkingDirectory)/sm-shop/target
+  #  - task: Docker@2
+  #    displayName: Build Shopizer docker image
+  #    inputs:
+  #      command: build
+  #      containerRegistry: scShopizerACR
+  #      repository: $(imageName)
+  #      Dockerfile: sm-shop/Dockerfile
+  #      tags: $(Build.BuildNumber)
+  #  - task: Docker@2
+  #    displayName: Push Docker image to ACR
+  #    inputs:
+  #      command: push
+  #      containerRegistry: scShopizerACR
+  #      repository: $(imageName)
+  #      tags: $(Build.BuildNumber)
+  #  - task: Docker@2
+  #    displayName: Logout from ACR
+  #    inputs:
+  #     command: logout
+  #     containerRegistry: scShopizerACR
+#
+#- stage: Dev_Deployment
+#  jobs:
+#  - job: Deploy_Dev
+#    steps:
+#    - task: Bash@3
+#      inputs:
+#        targetType: 'inline'
+#        script: ls $(System.DefaultWorkingDirectory)
+#    - task: KubernetesManifest@0
+#      displayName: Deployment to Dev
+#      inputs:
+#        kubernetesServiceConnection: 'scShopizerAKS'
+#        namespace: dev
+#        manifests: shopizer.yaml
+#    - task: KubernetesManifest@0
+#      displayName: Service
+#      inputs:
+#        kubernetesServiceConnection: 'scShopizerAKS'
+#        namespace: dev
+#        manifests: shopizer-service.yaml
+
+#- stage: Prod_Deployment
+#  jobs:
+#  - job: Deploy_Prod
+#    steps:
+#    - task: Bash@3
+#      inputs:
+#        targetType: 'inline'
+#        script: ls $(System.DefaultWorkingDirectory)
+#    - task: KubernetesManifest@0
+#      displayName: Deployment to Prod
+#      inputs:
+#        kubernetesServiceConnection: 'scShopizerAKS'
+#        namespace: prod
+#        manifests: shopizer.yaml
+#    - task: KubernetesManifest@0
+#      displayName: Service
+#      inputs:
+#        kubernetesServiceConnection: 'scShopizerAKS'
+#        namespace: prod
+#        manifests: shopizer-service.yaml
