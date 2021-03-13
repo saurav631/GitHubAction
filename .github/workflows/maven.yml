@@ -74,6 +74,6 @@ jobs:
           username: ${{ secrets.CR_Username }}
           password: ${{ secrets.CR_Password }}
           registry: ghcr.io
-          repository: githubteamuser2/Shopizer
+          repository: githubteamuser2/shopizer
           tags: ${{ github.sha }}
           dockerfile: ${GITHUB_WORKSPACE}/sm-shop/Dockerfile
