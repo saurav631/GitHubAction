@@ -84,4 +84,4 @@ jobs:
           registry: ghcr.io
           repository: githubteamuser2/shopizer
           tags: ${{ github.sha }}
-          dockerfile: ${GITHUB_WORKSPACE}/sm-shop/Dockerfile
+          dockerfile: /sm-shop/Dockerfile
