@@ -71,6 +71,8 @@ jobs:
           #path: staging
       - name: Move the artifact to target
         run: |
+          pwd
+          ls -lart
           mkdir -p {GITHUB_WORKSPACE}/sm-shop/target
           mv artifact/ROOT.war {GITHUB_WORKSPACE}/sm-shop/target
           #docker build -t de.rieckpil.blog/github-actions-sample github-actions-java-maven  
