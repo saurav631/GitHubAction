@@ -64,10 +64,16 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v2
       - name: Download built artifact
-        uses: actions/download-artifact@master
+        #uses: actions/download-artifact@master
+        uses: actions/download-artifact@v1
         with:
           name: Shopizer-Package
-          path: staging
+          #path: staging
+      - name: Move the artifact to target
+        run: |
+          mkdir -p {GITHUB_WORKSPACE}/sm-shop/target
+          mv artifact/ROOT.war {GITHUB_WORKSPACE}/sm-shop/target
+          #docker build -t de.rieckpil.blog/github-actions-sample github-actions-java-maven  
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v1
         with:
