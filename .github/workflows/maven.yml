@@ -73,8 +73,8 @@ jobs:
         run: |
           pwd
           ls -lart
-          mkdir -p {GITHUB_WORKSPACE}/sm-shop/target
-          mv artifact/ROOT.war {GITHUB_WORKSPACE}/sm-shop/target
+          mkdir -p ${GITHUB_WORKSPACE}/sm-shop/target
+          mv ${GITHUB_WORKSPACE}/Shopizer-Package/ROOT.war ${GITHUB_WORKSPACE}/sm-shop/target
           #docker build -t de.rieckpil.blog/github-actions-sample github-actions-java-maven  
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v1
