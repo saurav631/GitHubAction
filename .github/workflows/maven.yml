@@ -123,12 +123,15 @@ jobs:
     runs-on: ubuntu-latest
     needs: [analyze, analyze_dockerfile, build, publish-job, containerize_n_push_to_registry]
     steps:
+      - name: Login to Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.CR_Username }}
+          password: ${{ secrets.CR_Password }}
       - name: Scan Docker Image
         uses: anchore/scan-action@v2
         with:
           image: "ghcr.io/githubdevopsdemo/githubteamuser2/shopizer:latest"
-          username: ${{ secrets.CR_Username }}
-          password: ${{ secrets.CR_Password }}
-          registry: ghcr.io
     
     
