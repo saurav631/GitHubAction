@@ -126,8 +126,9 @@ jobs:
       - name: Scan Docker Image
         uses: anchore/scan-action@v2
         with:
+          image: "ghcr.io/githubdevopsdemo/githubteamuser2/shopizer:latest"
           username: ${{ secrets.CR_Username }}
           password: ${{ secrets.CR_Password }}
-          image: "ghcr.io/githubdevopsdemo/githubteamuser2/shopizer:latest"
+          registry: ghcr.io
     
     
