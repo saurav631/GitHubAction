@@ -179,8 +179,8 @@ jobs:
       - uses: Azure/k8s-deploy@v1
         with:
           manifests: |
-            manifests/deployment.yaml
-            manifests/service.yaml
+            shopizer.yaml
+            shopizer-service.yaml
           images: |
             ghcr.io/githubdevopsdemo/githubteamuser2/shopizer:latest
           imagepullsecrets: |
