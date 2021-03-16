@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: shopizer
-        image: devopsnetwork.azurecr.io/shopizer:BUILDNUM
+        image: ghcr.io/githubdevopsdemo/githubteamuser2/shopizer:latest
         resources:
           requests:
              cpu: 700m
