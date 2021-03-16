@@ -155,7 +155,7 @@ jobs:
   Deploy:
     name: Deploy shopizer image to AKS cluster
     runs-on: ubuntu-latest
-    needs: [secret-scan, analyze, analyze_dockerfile, build, publish-job]
+    needs: [secret-scan, analyze, analyze_dockerfile, build, publish-job, containerize_n_push_to_registry]
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
