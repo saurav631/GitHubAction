@@ -113,7 +113,8 @@ jobs:
           registry: ghcr.io
           #repository: githubteamuser2/shopizer
           repository: githubdevopsdemo/githubteamuser2/shopizer
-          tags: ${{ github.sha }}
+          #tags: ${{ github.sha }}
+          tags: latest
           path: sm-shop/
           #dockerfile: Dockerfile
           file: sm-shop/Dockerfile
