@@ -29,6 +29,7 @@ jobs:
       
     - name: Dockerfile validation - Docker Hadolint Linter
       run: docker run --rm -i hadolint/hadolint < sm-shop/Dockerfile
+      if: always()
     
   build:
     name: Build Code
