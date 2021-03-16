@@ -126,6 +126,6 @@ jobs:
       - name: Scan Docker Image
         uses: anchore/scan-action@v2
         with:
-          image: "githubdevopsdemo/githubteamuser2/shopizer:latest"
+          image: "ghcr.io/githubdevopsdemo/githubteamuser2/shopizer:latest"
     
     
