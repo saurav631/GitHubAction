@@ -1,0 +1,29 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: shopizer-app
+  labels:
+    app: shopizer
+spec:
+  selector:
+    matchLabels:
+      app: shopizer
+
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: shopizer
+
+    spec:
+      containers:
+      - name: shopizer
+        image: ghcr.io/githubdevopsdemo/githubteamuser2/shopizer:latest
+        resources:
+          requests:
+             cpu: 700m
+          limits:
+             cpu: 900m
+        
+        ports:
+        - containerPort: 8080

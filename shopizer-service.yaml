@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: shopizer-frontend
+  labels:
+    app: shopizer
+
+spec:
+  # comment or delete the following line if you want to use a LoadBalancer
+  # if your cluster supports it, uncomment the following to automatically create
+  # an external load-balanced IP for the frontend service.
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+    name: http
+  selector:
+    app: shopizer
