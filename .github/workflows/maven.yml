@@ -145,10 +145,12 @@ jobs:
           image: "ghcr.io/githubdevopsdemo/githubteamuser2/shopizer:latest"
           acs-report-enable: true
           fail-build: false
-      - name: grype scan JSON results
-        run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+      #- name: grype scan JSON results
+      #  run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+      - name: Inspect SARIF Report
+        run: cat ${{ steps.scan.outputs.sarif }}
       - name: upload Anchore scan SARIF report
         uses: github/codeql-action/upload-sarif@v1
         with:
-          sarif_file: ./anchore-reports/*.sarif
+          sarif_file: ${{ steps.scan.outputs.sarif }}
     
