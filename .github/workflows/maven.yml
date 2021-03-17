@@ -192,8 +192,8 @@ jobs:
     name: Perform DAST scan
     runs-on: ubuntu-latest
     needs: [secret-scan, analyze, analyze_dockerfile, build, publish-job, containerize_n_push_to_registry, scan-image, Deploy]          
-    steps:
-    - name: ZAP Scan
-      uses: zaproxy/action-full-scan@v0.2.0
-      with:
-        target: 'https://www.zaproxy.org/'
+    #steps:
+    #- name: ZAP Scan
+      #uses: zaproxy/action-full-scan@v0.2.0
+      #with:
+        #target: 'https://www.zaproxy.org/'
