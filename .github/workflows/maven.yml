@@ -27,8 +27,14 @@ jobs:
         uses: anchore/scan-action@v2
         with:
           image: "ghcr.io/githubdevopsdemo/githubteamuser2/shopizer:latest"
-          acs-report-enable: false
+          acs-report-enable: true
           fail-build: false
+      - name: upload Anchore scan SARIF report
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: ${{ steps.scan.outputs.sarif }}  
+      - name: Inspect SARIF Report
+        run: cat ${{ steps.scan.outputs.sarif }}
       #- name: get the path of the anchore report
       #  run: |
       #    pwd
@@ -36,19 +42,15 @@ jobs:
       #    ls -lart ${GITHUB_WORKSPACE}/anchore-reports
           
         
-      - name: grype scan JSON results
-        run: for j in `ls ${GITHUB_WORKSPACE}/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
-      - name: get the path of the anchore report
-        run: |
-          pwd
-          ls -lart
+      #- name: grype scan JSON results
+      #  run: for j in `ls ${GITHUB_WORKSPACE}/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+      #- name: get the path of the anchore report
+      #  run: |
+      #    pwd
+      #    ls -lart
       
-      #- name: Inspect SARIF Report
-      #  run: cat ${{ steps.scan.outputs.sarif }}
-      #- name: upload Anchore scan SARIF report
-      #  uses: github/codeql-action/upload-sarif@v1
-      #  with:
-      #    sarif_file: ${{ steps.scan.outputs.sarif }}
+      #
+      #
     
   
             
