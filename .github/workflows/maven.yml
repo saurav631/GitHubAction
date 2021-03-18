@@ -25,10 +25,16 @@ jobs:
           password: ${{ secrets.CR_Password }}
       - name: Scan Docker Image
         uses: anchore/scan-action@v2
+        id: scan
         with:
           image: "ghcr.io/githubdevopsdemo/githubteamuser2/shopizer:latest"
           acs-report-enable: true
           fail-build: false
+      - name: get the path of the anchore report
+        run: |
+          pwd
+          ls -lart
+          ls -lart ${GITHUB_WORKSPACE}
       - name: upload Anchore scan SARIF report
         uses: github/codeql-action/upload-sarif@v1
         with:
