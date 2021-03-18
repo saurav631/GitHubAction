@@ -29,6 +29,13 @@ jobs:
           image: "ghcr.io/githubdevopsdemo/githubteamuser2/shopizer:latest"
           acs-report-enable: false
           fail-build: false
+      - name: get the path of the anchore report
+        run: |
+          pwd
+          ls -lart
+          ls -lart ${GITHUB_WORKSPACE}/anchore-reports
+          
+        
       #- name: grype scan JSON results
       #  run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
       #- name: Inspect SARIF Report
