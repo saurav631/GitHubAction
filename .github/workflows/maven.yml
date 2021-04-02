@@ -159,6 +159,7 @@ jobs:
     needs: [secret-scan, analyze, analyze_dockerfile, build, publish-job, containerize_n_push_to_registry, scan-image]
     steps:
       - name: Provision QA Environment
+        uses: actions/checkout@v2
     
   Deploy:
     name: Deploy shopizer image to AKS cluster
@@ -210,6 +211,7 @@ jobs:
     needs: [secret-scan, analyze, analyze_dockerfile, build, publish-job, containerize_n_push_to_registry, scan-image, Provision-env, Deploy]
     steps:
       - name: Invoke Test Automation
+        uses: actions/checkout@v2
     
   Run-Performance:
     name: Invoke Performance Test 
@@ -217,3 +219,4 @@ jobs:
     needs: [secret-scan, analyze, analyze_dockerfile, build, publish-job, containerize_n_push_to_registry, scan-image, Provision-env, Deploy, Run-Test-Automation]
     steps:
       - name: Invoke Performance Test
+        uses: actions/checkout@v2
