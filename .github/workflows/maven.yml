@@ -173,8 +173,11 @@ jobs:
       - uses: Azure/aks-set-context@v1
         with:
           creds: '${{ secrets.AZURE_CREDENTIALS }}'
-          cluster-name: github_shopizer
-          resource-group: RG_Shopizer_AKS
+          #Updated the AKS cluster with JK's account
+          #cluster-name: github_shopizer
+          #resource-group: RG_Shopizer_AKS
+          cluster-name: shopizer
+          resource-group: newaks
           
     # Set the image secret
       - uses: Azure/k8s-create-secret@v1
