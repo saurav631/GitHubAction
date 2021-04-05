@@ -216,7 +216,7 @@ jobs:
         - name: Repository Dispatch
           uses: peter-evans/repository-dispatch@v1
           with:
-            token: ${{ secrets.REPO_ACCESS_TOKEN }}
+            token: ${{ secrets.TEST_ACCESS_TOKEN }}
             repository: "githubteamuser1/cima-integration-test"
             event-type: invoke-test
             client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
