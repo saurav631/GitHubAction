@@ -66,7 +66,7 @@ jobs:
      - name: Build with Maven
        run: mvn -B package --file pom.xml
 
-     publish-job:
+  publish-job:
        name: Package Code as war
        runs-on: ubuntu-latest
        #defaults:
@@ -94,7 +94,7 @@ jobs:
              name: Shopizer-Package
              path: staging
 
-   containerize_n_push_to_registry:
+  containerize_n_push_to_registry:
      name: Build Docker image and push to GitHub Container Registry
      runs-on: ubuntu-latest
      needs: [secret-scan, analyze, analyze_dockerfile, build, publish-job]
@@ -128,7 +128,7 @@ jobs:
            #dockerfile: Dockerfile
            file: sm-shop/Dockerfile
 
-   scan-image:
+  scan-image:
      name: Scan Docker Image
      runs-on: ubuntu-latest
      needs: [secret-scan, analyze, analyze_dockerfile, build, publish-job, containerize_n_push_to_registry]
@@ -161,10 +161,10 @@ jobs:
 #       - name: Provision QA Environment
 #         uses: actions/checkout@v2
     
-   Deploy:
+  Deploy:
      name: Deploy shopizer image to AKS cluster
      runs-on: ubuntu-latest
-     needs: [secret-scan, analyze, analyze_dockerfile, build, publish-job, containerize_n_push_to_registry, scan-image, Provision-env]
+     needs: [secret-scan, analyze, analyze_dockerfile, build, publish-job, containerize_n_push_to_registry, scan-image] #, Provision-env]
      steps:
        - name: Check out the repo
          uses: actions/checkout@v2
