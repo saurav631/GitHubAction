@@ -64,7 +64,8 @@ jobs:
          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
          restore-keys: ${{ runner.os }}-m2   
      - name: Build with Maven
-       run: mvn -B package --file pom.xml
+       #run: mvn -B package --file pom.xml
+       run: mvn -B clean verify --file pom.xml
      - run: ls -lart ${GITHUB_WORKSPACE}/sm-shop/target
      - run: ls -lart ${GITHUB_WORKSPACE}/sm-shop/target/site
      - run: ls -lart ${GITHUB_WORKSPACE}/sm-shop/target/site/jacoco
