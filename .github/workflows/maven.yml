@@ -65,6 +65,18 @@ jobs:
          restore-keys: ${{ runner.os }}-m2   
      - name: Build with Maven
        run: mvn -B package --file pom.xml
+     - name: Upload coverage to Codecov
+       uses: codecov/codecov-action@v1
+       with:
+        token: ${{ secrets.CODECOVE_TOKEN }}
+        files: ./sm-shop/target/site/jacoco/jacoco.xml
+        #directory: ${GITHUB_WORKSPACE}/sm-shop/target/site/jacoco/
+        flags: unittests
+        #env_vars: OS,PYTHON
+        name: codecov-umbrella
+        fail_ci_if_error: true
+        #path_to_write_report: ./coverage/codecov_report.txt
+        verbose: true
 
   publish-job:
        name: Package Code as war
@@ -174,11 +186,12 @@ jobs:
          with:
            creds: '${{ secrets.AZURE_CREDENTIALS }}'
            #Updated the AKS cluster with JK's account
+           #Updated the AKS with Singha's account
 
            #cluster-name: github_shopizer
            #resource-group: RG_Shopizer_AKS
            cluster-name: shopizer
-           resource-group: ICICI_demo
+           resource-group: ShopizerOnDemandCluster
            
           
      # Set the image secret
