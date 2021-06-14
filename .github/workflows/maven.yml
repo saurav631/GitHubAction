@@ -66,7 +66,7 @@ jobs:
      - name: Build with Maven
        #run: mvn -B package --file pom.xml
        run: mvn -B clean verify --file pom.xml
-     - run: ls -lart ${GITHUB_WORKSPACE}/sm-shop/target
+     #- run: ls -lart ${GITHUB_WORKSPACE}/sm-shop/target
      - run: ls -lart ${GITHUB_WORKSPACE}/sm-shop/target/site
      - run: ls -lart ${GITHUB_WORKSPACE}/sm-shop/target/site/jacoco
      - name: Upload coverage to Codecov
