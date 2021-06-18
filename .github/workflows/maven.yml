@@ -242,11 +242,16 @@ jobs:
             repository: "GitHubDevOpsDemo/cima-integration-test"
             event-type: invoke_test
     
-#  Run-Performance:
-#    name: Invoke Performance Test 
-#    runs-on: ubuntu-latest
+  Run-Performance:
+    name: Invoke Performance Test 
+    runs-on: ubuntu-latest
 #    #needs: [secret-scan, analyze, analyze_dockerfile, build, publish-job, containerize_n_push_to_registry, scan-image, Provision-env, Deploy, Run-Test-Automation]
-#    needs: [secret-scan, Run-Test-Automation]
-#    steps:
-#      - name: Invoke Performance Test
-#        uses: actions/checkout@v2
+    needs: [Run-Test-Automation]
+    steps:
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v1
+        with:
+            #token: ${{ secrets.TEST_ACCESS_TOKEN }}
+          oken: ${{ secrets.PERF_TEST_ACCESS_TOKEN }}
+          repository: "GitHubDevOpsDemo/perfTest"
+          event-type: invoke_perftest
