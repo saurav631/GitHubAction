@@ -252,6 +252,6 @@ jobs:
         uses: peter-evans/repository-dispatch@v1
         with:
             #token: ${{ secrets.TEST_ACCESS_TOKEN }}
-          oken: ${{ secrets.PERF_TEST_ACCESS_TOKEN }}
+          token: ${{ secrets.PERF_TEST_ACCESS_TOKEN }}
           repository: "GitHubDevOpsDemo/perfTest"
           event-type: invoke_perftest
