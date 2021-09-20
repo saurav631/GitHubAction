@@ -194,8 +194,8 @@ jobs:
 
            #cluster-name: github_shopizer
            #resource-group: RG_Shopizer_AKS
-           cluster-name: shopizer
-           resource-group: ShopizerOnDemandCluster
+           cluster-name: shopizer_ondemand_k8scluster #shopizer
+           resource-group: rg_shopizer_ondemand_k8scluster #ShopizerOnDemandCluster
            
           
      # Set the image secret
