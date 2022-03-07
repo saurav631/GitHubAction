@@ -34,7 +34,7 @@ response.setDateHeader ("Expires", -1);
 
 					<c:if test="${not fn:contains(requestScope['javax.servlet.forward.servlet_path'], 'order') && not fn:contains(requestScope['javax.servlet.forward.servlet_path'], 'cart')}">
 					<!-- not displayed in checkout (order) and cart -->
- 					<!-- <div id="miniCart" style="padding-top: 8px;padding-bottom:10px;" class="btn-group pull-right">
+ 					<div id="miniCart" style="padding-top: 8px;padding-bottom:10px;" class="btn-group pull-right">
             					&nbsp;&nbsp;&nbsp;
             					<i class="icon-shopping-cart icon-black"></i>
             					<a style="box-shadow:none;color:FF8C00;" href="#" data-toggle="dropdown" class="open noboxshadow dropdown-toggle" id="open-cart"><s:message code="label.mycart" text="My cart"/></a>
@@ -45,7 +45,7 @@ response.setDateHeader ("Expires", -1);
 										<jsp:include page="/pages/shop/common/cart/minicart.jsp" />
 		              				</li>	
 		            			</ul> 
-					</div> -->
+					</div>
 					</c:if>
 					
 					<!-- If display customer section -->
