@@ -200,8 +200,13 @@ jobs:
 
            #cluster-name: github_shopizer
            #resource-group: RG_Shopizer_AKS
+           #cluster-name: shopizer #shopizer_ondemand_k8scluster #shopizer
+           #resource-group: ShopizerOnDemandCluster #rg_shopizer_ondemand_k8scluster
+           
+           #Cluster from pravin's account
            cluster-name: shopizer #shopizer_ondemand_k8scluster #shopizer
-           resource-group: ShopizerOnDemandCluster #rg_shopizer_ondemand_k8scluster
+           resource-group: RG_Shopizer #rg_shopizer_ondemand_k8scluster
+           
            
           
      # Set the image secret
