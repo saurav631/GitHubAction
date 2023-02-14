@@ -10,6 +10,7 @@ on:
     branches: [ master ]
   repository_dispatch:
     types: [invoke_build_deploy]
+  deployment: development
 
 jobs:
   secret-scan:
