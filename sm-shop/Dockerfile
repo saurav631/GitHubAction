@@ -12,7 +12,7 @@ VOLUME /tmp
 #    	mysql-client \
 #    	vim \
 #    && apt-get clean
-RUN sudo apt-get update && sudo apt-get dist-upgrade
+RUN apt-get update && sudo apt-get dist-upgrade
 RUN apt-get install -y mysql-client
 
 
