@@ -6,10 +6,10 @@ name: Java CI with Maven
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
-  repository_dispatch:
-    types: [invoke_build_deploy]
+#  pull_request:
+#    branches: [ master ]
+#  repository_dispatch:
+#    types: [invoke_build_deploy]
   deployment: development
 
 jobs:
