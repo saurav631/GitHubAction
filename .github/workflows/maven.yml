@@ -198,6 +198,7 @@ jobs:
        - uses: Azure/aks-set-context@v1
          with:
            creds: '${{ secrets.AZURE_CREDENTIALS }}'
+           #updated with API-Demo RG from Kushal's account
            #Updated the AKS cluster with JK's account
            #Updated the AKS with Singha's account
 
@@ -207,8 +208,8 @@ jobs:
            #resource-group: ShopizerOnDemandCluster #rg_shopizer_ondemand_k8scluster
            
            #Cluster from pravin's account
-           cluster-name: shopizer #shopizer_ondemand_k8scluster #shopizer
-           resource-group: RG_Shopizer #rg_shopizer_ondemand_k8scluster
+           cluster-name: apidemocluster #shopizer #shopizer_ondemand_k8scluster #shopizer
+           resource-group: API-Demo #RG_Shopizer #rg_shopizer_ondemand_k8scluster
            
            
           
