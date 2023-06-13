@@ -1,6 +1,5 @@
 name: Java CI with Maven
-on:
-  push:
+on: [push]
 #    branches: 
 #      - '*'
     #[ master ]
@@ -8,7 +7,7 @@ on:
 #    branches: [ master ]
 #  repository_dispatch:
 #    types: [invoke_build_deploy]
-  deployment: development
+  #deployment: development
 
 jobs:
   secret-scan:
