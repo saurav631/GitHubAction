@@ -1,7 +1,6 @@
 name: Provenance_Java_CI_with_Maven
 on: [push]
 permissions: read-all
-
 jobs:
   build:
     permissions:
@@ -35,5 +34,5 @@ jobs:
 #       run: mvn -B clean verify --file pom.xml
 #     - run: ls -lart ${GITHUB_WORKSPACE}/sm-shop/target/
 #     - uses: github-early-access/generate-build-provenance@main
-       with:
-         subject-path: '${{ github.workspace }}/sm-shop/target/ROOT.war'
+#       with:
+#         subject-path: '${{ github.workspace }}/sm-shop/target/ROOT.war'
