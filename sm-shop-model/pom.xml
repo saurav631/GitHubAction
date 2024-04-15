@@ -45,6 +45,8 @@
 		<shopizer.version>2.7.0</shopizer.version>
 		<!-- api documentation -->
 		<swagger.version>2.9.2</swagger.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 
 
