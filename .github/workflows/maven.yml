@@ -8,7 +8,6 @@ on: [push]
 #  repository_dispatch:
 #    types: [invoke_build_deploy]
   #deployment: development
-
 jobs:
   secret-scan:
     name: Repo Secret Scan 
@@ -18,7 +17,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: max/secret-scan@master
-      
   analyze:
      name: Analyze Source Code
      #runs-on: ['self-hosted', 'Windows', 'X64']
@@ -26,17 +24,14 @@ jobs:
      needs: [secret-scan]
      steps:
      - name: Checkout repository
-       uses: actions/checkout@v2
-      
+       uses: actions/checkout@v2 
     # Initializes the CodeQL tools for scanning.
  #    - name: Initialize CodeQL
  #      uses: github/codeql-action/init@v1
  #      with:
  #       languages: javascript  
-    
  #    - name: Perform CodeQL Analysis
- #      uses: github/codeql-action/analyze@v1
-      
+ #      uses: github/codeql-action/analyze@v1    
   analyze_dockerfile:
      name: Analyze Dockerfile
      runs-on: ubuntu-latest
@@ -46,9 +41,7 @@ jobs:
      - name: Checkout repository
        uses: actions/checkout@v2    
      - name: Dockerfile validation - Docker Hadolint Linter
-       run: docker run --rm -i hadolint/hadolint < sm-shop/Dockerfile
-      
-    
+       run: docker run --rm -i hadolint/hadolint < sm-shop/Dockerfile 
   build:
      name: Build Code
      runs-on: ubuntu-latest
@@ -83,7 +76,6 @@ jobs:
         fail_ci_if_error: true
         #path_to_write_report: ./coverage/codecov_report.txt
         verbose: true
-
   publish-job:
        name: Package Code as war
        runs-on: ubuntu-latest
@@ -111,11 +103,6 @@ jobs:
            with:
              name: Shopizer-Package
              path: staging
-
-
-       
-
-
   containerize_n_push_to_registry:
      name: Build Docker image and push to GitHub Container Registry
      runs-on: ubuntu-latest
@@ -149,7 +136,6 @@ jobs:
            path: sm-shop/
            #dockerfile: Dockerfile
            file: sm-shop/Dockerfile
-
   scan-image:
      name: Scan Docker Image
      runs-on: ubuntu-latest
@@ -174,7 +160,6 @@ jobs:
            sarif_file: ${{ steps.scan.outputs.sarif }}  
        - name: Inspect SARIF Report
          run: cat ${{ steps.scan.outputs.sarif }}
-  
 #   Provision-env:
 #     name: Provision QA Environment
 #     runs-on: ubuntu-latest
@@ -182,7 +167,6 @@ jobs:
 #     steps:
 #       - name: Provision QA Environment
 #         uses: actions/checkout@v2
-    
   Deploy:
      name: Deploy shopizer image to AKS cluster dev namespace
      runs-on: ubuntu-latest
@@ -190,7 +174,6 @@ jobs:
      steps:
        - name: Check out the repo
          uses: actions/checkout@v2
-        
      # Set the target AKS cluster.
        - uses: Azure/aks-set-context@v1
          with:
@@ -198,18 +181,13 @@ jobs:
            #updated with API-Demo RG from Kushal's account
            #Updated the AKS cluster with JK's account
            #Updated the AKS with Singha's account
-
            #cluster-name: github_shopizer
            #resource-group: RG_Shopizer_AKS
            #cluster-name: shopizer #shopizer_ondemand_k8scluster #shopizer
            #resource-group: ShopizerOnDemandCluster #rg_shopizer_ondemand_k8scluster
-           
            #Cluster from pravin's account
            cluster-name: apidemocluster #shopizer #shopizer_ondemand_k8scluster #shopizer
-           resource-group: API-Demo #RG_Shopizer #rg_shopizer_ondemand_k8scluster
-           
-           
-          
+           resource-group: API-Demo #RG_Shopizer #rg_shopizer_ondemand_k8scluster   
      # Set the image secret
        - uses: Azure/k8s-create-secret@v1
          with:
@@ -218,7 +196,6 @@ jobs:
            container-registry-password: ${{ secrets.CR_Password }}
            secret-name: k8s-secret
            namespace: dev
-    
      # Deploy
        - uses: Azure/k8s-deploy@v1
          with:
@@ -229,8 +206,7 @@ jobs:
              ghcr.io/githubdevopsdemo/githubteamuser2/shopizer:latest
            imagepullsecrets: |
              k8s-secret
-           namespace: dev
-            
+           namespace: dev 
  #DAST:
     #name: Perform DAST scan
     #runs-on: ubuntu-latest
@@ -240,7 +216,6 @@ jobs:
       #uses: zaproxy/action-full-scan@v0.2.0
       #with:
         #target: 'https://www.zaproxy.org/'
-        
   Run-Test-Automation:
       name: Run Test Automation
       runs-on: ubuntu-latest
@@ -253,7 +228,6 @@ jobs:
             token: ${{ secrets.ACCESS_TOKEN }}
             repository: "GitHubDevOpsDemo/cima-integration-test"
             event-type: invoke_test
-    
   Run-Performance:
     name: Invoke Performance Test 
     runs-on: ubuntu-latest
