@@ -9,7 +9,7 @@ jobs:
       id-token: write
       contents: read
       actions: read
-    uses: saurav631/GitHubAction/.github/workflows/builder_maven_slsa3.yml
+    uses: ./.github/workflows/builder_maven_slsa3.yml
 
 
 
